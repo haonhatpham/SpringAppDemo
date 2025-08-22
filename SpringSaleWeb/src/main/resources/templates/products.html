@@ -1,0 +1,44 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Quản lý sản phẩm</title>
+    <th:context th:replace="base :: resources"></th:context>
+</head>
+<body>
+    <div th:replace="base :: header"></div>
+
+    <h1 class="text-center text-info mt-2">QUẢN LÝ SẢN PHẨM</h1>
+
+    <form method="post" th:object="${product}" th:action="@{/products}" enctype="multipart/form-data">
+        <div class="form-floating mb-3 mt-3">
+            <input type="text" class="form-control" id="name" th:field="*{name}" placeholder="Tên sản phẩm">
+            <label for="name">Tên sản phẩm</label>
+        </div>
+        <div class="form-floating mb-3 mt-3">
+            <input type="text" class="form-control" id="price" th:field="*{price}" placeholder="Tên sản phẩm">
+            <label for="price">Gía sản phẩm</label>
+        </div>
+        <div class="form-floating mb-3 mt-3">
+            <select class="form-select" id="sel1" th:field="*{categoryId}">
+                <option th:each="c : ${categories}" th:value="${c.id}" th:text="${c.name}"></option>
+            </select>
+            <label for="sel1" class="form-label">Danh mục</label>
+        </div>
+        <div class="form-floating mb-3 mt-3">
+            <input type="file" class="form-control" id="price" th:field="*{file}">
+            <label for="price">Ảnh sản phẩm</label>
+        </div>
+        <div class="form-floating mb-3 mt-3" th:if="${product.image != null}">
+            <img th:src="${product.image}" width="200" />
+        </div>
+        <div class="form-floating mb-3 mt-3">
+            <input type="hidden" th:field="*{id}" />
+            <input type="hidden" th:field="*{image}" />
+            <button  class="btn btn-success" th:if="${product.id == null}">Thêm sản phẩm</button>
+            <button  class="btn btn-success" th:unless="${product.id == null}">Cập nhật sản phẩm</button>
+        </div>
+    </form>
+
+    <div th:replace="base :: footer"></div>
+</body>
+</html>

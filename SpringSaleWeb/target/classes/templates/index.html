@@ -1,0 +1,66 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Trang chủ</title>
+    <th:context th:replace="base :: resources"></th:context>
+</head>
+<body>
+    <div th:replace="base :: header"></div>
+
+    <main class="container">
+        <h1 class="text-info text-center mt-2">Quản lý sản phẩm</h1>
+        <div class="mt-2 mb-2">
+            <a th:href="@{/products}" class="btn btn-success">Thêm sản phẩm</a> 
+        </div>    
+        <div>
+            <form th:action="@{/}">
+                <div class="mb-3 mt-3">
+                    <input type="text" class="form-control" placeholder="Tìm theo tên" name="kw">
+                </div>
+                <div class="row mb-3 mt-3">
+                    <div  class="col-6">
+                        <input type="number" class="form-control" placeholder="Từ giá" name="fromPrice">
+                    </div>
+                    <div  class="col-6">
+                        <input type="number" class="form-control" placeholder="Đến giá" name="toPrice">
+                    </div>
+                </div>
+                <div class="mb-3 mt-3">
+                    <button class="btn btn-info">Tìm sản phẩm</button>
+                </div>
+            </form>
+        </div>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>ID</th>
+                    <th>Tên sản phẩm</th>
+                    <th>Gía bán</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="p : ${products}">
+                    <td>
+                        <img th:src="${p.image}" width="200" class="rounded" />
+                    </td>
+                    <td th:text="${p.id}"></td>
+                    <td th:text="${p.name}"></td>
+                    <td th:text="${p.price} + ' VNĐ'"></td>
+                    <td>
+                        <a th:href="@{/products} + '/' + ${p.id}" class="btn btn-success">Cập nhật</a>
+                        <button class="btn btn-danger" th:onclick="'deleteProduct(\'' + @{/api/products/} + ${p.id} + '\')'">Xóa</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </main>
+
+    <div th:replace="base :: footer"></div>
+
+
+    <script th:src="@{/js/main.js}"></script>
+</body>
+</html>
